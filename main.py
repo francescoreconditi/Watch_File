@@ -2,10 +2,8 @@
 # fff Import
 #
 
-import json
 import os
 import time
-from distutils.file_util import move_file
 
 from watchdog.events import FileSystemEventHandler
 from watchdog.observers import Observer
