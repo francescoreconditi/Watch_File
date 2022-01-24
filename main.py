@@ -14,8 +14,8 @@ from watchdog.observers import Observer
 # fff Costanti
 #
 
-PATH_TO_WATCH = "c:\\temp\\origine"
-PATH_TO_PUT = "c:\\temp\\destinazione"
+CHECK_PATH = "c:\\temp\\origine"
+DEST_PATH = "c:\\temp\\destinazione"
 
 #
 # fff Flusso
@@ -23,20 +23,20 @@ PATH_TO_PUT = "c:\\temp\\destinazione"
 
 
 class MyHandler(FileSystemEventHandler):
-    i = 1
 
     # ! La funzione sotto "scatta" quando viene modificato (quindi anche "creato") un file nella
     # ! directory "che deve tenere d' occhio"
     def on_modified(self, event):
-        for filename in os.listdir(PATH_TO_WATCH):
+
+        for filename in os.listdir(CHECK_PATH):
 
             # ! File origine
-            src = os.path.join(PATH_TO_WATCH, filename)
+            src = os.path.join(CHECK_PATH, filename)
 
             # ! File Destinazione
-            new_destination = os.path.join(PATH_TO_PUT, filename)
+            new_destination = os.path.join(DEST_PATH, filename)
 
-            print(f"Origine : {src}      Destinazione : {new_destination}")
+            print(f"Origine : {src}   ->    Destinazione : {new_destination}")
 
             # ! lo muovo
             os.rename(src, new_destination)
@@ -49,7 +49,7 @@ event_handler = MyHandler()
 observer = Observer()
 
 # ! ... e gli associo l' "handler" sopra creato, passandogli la "dir da guardare"
-observer.schedule(event_handler, PATH_TO_WATCH, recursive=False)    # ! True -> anche le sottodir.
+observer.schedule(event_handler, CHECK_PATH, recursive=False)    # ! True -> anche le sottodir.
 
 # ! Avvio l' "osservatore"
 observer.start()
