@@ -34,8 +34,6 @@ class MyHandler(FileSystemEventHandler):
             # ! File Destinazione
             new_destination = os.path.join(DEST_PATH, filename)
 
-            print(f"Origine : {src}   ->    Destinazione : {new_destination}")
-
             # ! lo muovo
             os.rename(src, new_destination)
 
