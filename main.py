@@ -2,10 +2,8 @@
 # fff Import
 #
 
-import json
 import os
 import time
-from distutils.file_util import move_file
 
 from watchdog.events import FileSystemEventHandler
 from watchdog.observers import Observer
@@ -36,28 +34,28 @@ class MyHandler(FileSystemEventHandler):
             # ! File Destinazione
             new_destination = os.path.join(DEST_PATH, filename)
 
-            print(f"Origine : {src}   ->    Destinazione : {new_destination}")
-
             # ! lo muovo
             os.rename(src, new_destination)
 
 
-# ! Creo l' "handler"
-event_handler = MyHandler()
+if __name__ == "__main__":
+    # ! Creo l' "handler"
+    event_handler = MyHandler()
 
-# ! Creo l' oggetto "osservatore" ...
-observer = Observer()
+    # ! Creo l' oggetto "osservatore" ...
+    observer = Observer()
 
-# ! ... e gli associo l' "handler" sopra creato, passandogli la "dir da guardare"
-observer.schedule(event_handler, CHECK_PATH, recursive=False)    # ! True -> anche le sottodir.
+    # ! ... e gli associo l' "handler" sopra creato, passandogli la "dir da guardare"
+    observer.schedule(event_handler, CHECK_PATH, recursive=False)    # ! True -> anche le sottodir.
 
-# ! Avvio l' "osservatore"
-observer.start()
+    # ! Avvio l' "osservatore"
+    observer.start()
 
-try:
-    while True:
-        time.sleep(10)
-except KeyboardInterrupt:
-    observer.stop()
+    try:
+        while True:
+            time.sleep(10)
 
-observer.join()    # ! per finire tutto
+    except KeyboardInterrupt:
+        observer.stop()
+
+    observer.join()    # ! per finire tutto
