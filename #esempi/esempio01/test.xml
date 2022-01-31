@@ -1,0 +1,16 @@
+<main>
+    <nomi>
+        <persona>
+            <nome soprannome="Frank" eta="22">Cecco</cecco>
+        </persona>
+        <persona>
+            <nome soprannome="Ciz">Ciuzze</cecco>
+        </persona>
+        <persona>
+            <nome soprannome="P">Paolo</cecco>
+        </persona>
+        <persona>
+            <nome>Luca</cecco>
+        </persona>
+    </nomi>
+</main>
