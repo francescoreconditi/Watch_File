@@ -33,6 +33,7 @@ class MyHandler(FileSystemEventHandler):
     def on_modified(self, event):
 
         for filename in os.listdir(CHECK_PATH):
+
             # ! Path completo
             src = os.path.join(CHECK_PATH, filename)
 

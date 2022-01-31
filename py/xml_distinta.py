@@ -1,5 +1,4 @@
 import xml.etree.ElementTree as ET
-from copy import deepcopy
 
 from .classi import Distinta
 
@@ -31,27 +30,20 @@ dict_campi = {"esercizio": "EseCont/CodEsercizioContabile",
 
 def check_xml_distinta(path_file: str):
 
-    # # ! Leggo il contenuto del file
-    # with open(path_file, 'r') as f:
-    #     data = f.read()
-
-    # # ! Passo il contenuto del file al parser "beautifulsoup"
-    # Bs_data = BeautifulSoup(data, "xml")
-
-    # # ! Trovo il nodo che indica l' inizio di una Distinata
-    # nl_disti = Bs_data.find_all('TestaDistintaBonifici')
-
-    # nodo: Tag = None
-    # for nodo in nl_disti:
-    #     for child in nodo.descendants:  # - children  -> figli del 1^ livello
-    #         print(child)
-    #     # print(nodo.get_text())
+    # ! "albero" XML ...
     tree = ET.parse(path_file)
+
+    # ! ... e tag "root"
     tag_root = tree.getroot()
 
+    # ! Tag Principale
     tag_stampa = tag_root.find("StampaDistintaBonifici/StrutturaDistintaBonifici")
 
+    # ! Lista Distinte
+    distinte = []
+
     for distinta in tag_stampa.findall("TestaDistintaBonifici"):
+
         # ! Nuova distinta
 
         # ! Campi della Testa
@@ -63,18 +55,18 @@ def check_xml_distinta(path_file: str):
             for key_r in key_righe:
                 key_righe[key_r].append(riga.find(key_r).text)
 
-    # ! Scorse tutte le righe
-    distinte = []
-    for n_riga in range(0, len(key_righe[dict_campi["cod_fornitore"]])):
-        distinte.append(Distinta(key_testa[dict_campi["esercizio"]],
-                                 key_testa[dict_campi["cod_grp_tipo_pag"]],
-                                 key_testa[dict_campi["n_distinta"]],
-                                 key_testa[dict_campi["cod_banca"]],
-                                 key_testa[dict_campi["des_banca"]],
-                                 key_righe[dict_campi["cod_fornitore"]][n_riga],
-                                 key_righe[dict_campi["des_fornitore"]][n_riga],
-                                 key_righe[dict_campi["imp_distinta"]][n_riga]
-                                 ))
+        # ! Distinta scorsa, "riscorro" le righe (la testata e' 1, le righe da 1 a N)
+        # : sotto uso "range(0,len(...))", l' indice inizia da 0 e appena arriva a "len" esce
+        for n_riga in range(0, len(key_righe[dict_campi["cod_fornitore"]])):
+            distinte.append(Distinta(key_testa[dict_campi["esercizio"]],
+                                     key_testa[dict_campi["cod_grp_tipo_pag"]],
+                                     key_testa[dict_campi["n_distinta"]],
+                                     key_testa[dict_campi["cod_banca"]],
+                                     key_testa[dict_campi["des_banca"]],
+                                     key_righe[dict_campi["cod_fornitore"]][n_riga],
+                                     key_righe[dict_campi["des_fornitore"]][n_riga],
+                                     key_righe[dict_campi["imp_distinta"]][n_riga]
+                                     ))
 
 
 if __name__ == '__main__':
