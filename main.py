@@ -70,7 +70,7 @@ if __name__ == "__main__":
     observer = Observer()
 
     # ! ... e gli associo l' "handler" sopra creato, passandogli la "dir da guardare"
-    observer.schedule(event_handler, CHECK_PATH, recursive=False)    # ! True -> anche le sottodir.
+    observer.schedule(event_handler, CHECK_PATH, recursive=False)    # : True -> anche le sottodir.
 
     # ! Avvio l' "osservatore"
     observer.start()
